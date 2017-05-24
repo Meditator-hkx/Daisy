@@ -36,7 +36,7 @@ struct tagBuddy {
 
 typedef struct tagBuddy Buddy;
 
-int p_init(long long size);
+int p_init(unsigned long size);
 
 /*
 * 清除pcm上方的元数据
