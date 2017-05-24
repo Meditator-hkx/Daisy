@@ -1,9 +1,9 @@
 #include "p_mmap.h"
 
-static int SHM_SIZE = 0;
+static unsigned long SHM_SIZE = 0;
 
 static char *pBaseAddr = NULL;
-static int iBitsCount = 0;
+static unsigned long iBitsCount = 0;
 
 static void* p_mmap(void* addr,unsigned long len,unsigned long prot,unsigned long id) {
 	return (void*)syscall(__NR_p_mmap, addr, len, prot, id);
@@ -64,7 +64,7 @@ int p_init() {
 }
 */
 
-int p_init(int size) {
+int p_init(unsigned long size) {
     int iRet = 0;
 
     if (pBaseAddr != NULL) {
@@ -86,7 +86,7 @@ int p_init(int size) {
         printf("error: p_get_small_region\n");
         return -1;
     }
-
+    // SHM_SIZE can be an unsigned long size
     pBaseAddr = p_mmap(NULL, SHM_SIZE, PROT_READ | PROT_WRITE, HPID);
     if (!pBaseAddr) {
         printf("p_mmap return NULL\n");
